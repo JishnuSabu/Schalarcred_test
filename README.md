@@ -176,7 +176,7 @@ flutter build web
 firebase deploy
 
 
-Your Flutter Web application will now be live at your Firebase Hosting URL.
+Your Flutter Web application will now be live at your Firebase Hosting URL : https://notficationsdemo.web.app/
 
 👤 Author
 Jishnu Sabu
