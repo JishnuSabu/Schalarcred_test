@@ -1,0 +1,29 @@
+class Images {
+  static const base = 'assets/images';
+  static const image1 = '$base/image1.jpg';
+  static const women = '$base/women.jpg';
+  static const men = '$base/men.jpg';
+  static const kids = '$base/kids.jpg';
+  static const accessories = '$base/accessories.jpg';
+  static const men2 = '$base/men2.jpg';
+  static const men3 = '$base/men3.jpg';
+  static const men4 = '$base/men4.jpg';
+  static const men5 = '$base/men5.jpg';
+  static const women2 = '$base/women2.jpg';
+  static const women3 = '$base/women3.jpg';
+  static const women4 = '$base/women4.jpg';
+  static const kid2 = '$base/kid2.jpg';
+  static const kid3 = '$base/kid3.jpg';
+  static const kid4 = '$base/kid4.jpg';
+  static const kid5 = '$base/kid5.jpg';
+  static const bag = '$base/bag.jpg';
+  static const bangles = '$base/bangles.jpg';
+  static const girlwithbag = '$base/girlwithbag.jpg';
+  static const jeans = '$base/jeans.jpg';
+  static const dress = '$base/dress.jpg';
+  static const makeup = '$base/makeup.jpg';
+  static const purse = '$base/purse.jpg';
+  static const hat = '$base/hat.jpg';
+  static const chappal = '$base/chappal.jpg';
+  static const payment = '$base/payment.png';
+}
