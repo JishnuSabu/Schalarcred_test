@@ -62,10 +62,7 @@ class SocialMediaSection extends StatelessWidget {
       width: width,
       height: height,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: NetworkImage(imageUrl),
-          fit: BoxFit.cover,
-        ),
+        image: DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover),
       ),
     );
   }

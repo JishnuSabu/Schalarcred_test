@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scholarcred_test/core/responsive/responsive.dart';
 import 'package:scholarcred_test/features/product/presentation/pages/widgets/hexa_shop_logo.dart';
 
 class FooterSection extends StatelessWidget {
@@ -7,24 +6,43 @@ class FooterSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < ResponsiveConstants.tabletBreakpoint;
-    final isTablet = width < ResponsiveConstants.desktopBreakpoint && !isMobile;
-
     return Column(
       children: [
         Container(
-          height: isMobile ? 400 : 286,
+          height: 286,
           color: Color(0xFF1E1E1E),
-          padding: EdgeInsets.symmetric(
-            horizontal: ResponsiveConstants.getHorizontalPadding(context),
-            vertical: isMobile ? 20 : 50,
+          padding: const EdgeInsets.symmetric(horizontal: 80, vertical: 50),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(flex: 2, child: _buildCompanyInfo()),
+              const SizedBox(width: 60),
+              Expanded(
+                child: _buildLinkSection('Shopping and Categories', [
+                  'Men\'s Shopping',
+                  'Women\'s Shopping',
+                  'Kid\'s Shopping',
+                ]),
+              ),
+              const SizedBox(width: 60),
+              Expanded(
+                child: _buildLinkSection('Useful Links', [
+                  'Homepage',
+                  'About Us',
+                  'Help',
+                  'Contact Us',
+                ]),
+              ),
+              const SizedBox(width: 60),
+              Expanded(
+                child: _buildLinkSection('Help & Information', [
+                  'FAQ\'S',
+                  'Shipping',
+                  'Tracking Id',
+                ]),
+              ),
+            ],
           ),
-          child: isMobile
-              ? _buildMobileFooter(context)
-              : isTablet
-              ? _buildTabletFooter(context)
-              : _buildDesktopFooter(context),
         ),
         Container(
           color: Color(0xFF000000),
@@ -44,117 +62,7 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildDesktopFooter(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Expanded(flex: 2, child: _buildCompanyInfo(context)),
-        const SizedBox(width: 60),
-        Expanded(
-          child: _buildLinkSection('Shopping and Categories', [
-            'Men\'s Shopping',
-            'Women\'s Shopping',
-            'Kid\'s Shopping',
-          ], context),
-        ),
-        const SizedBox(width: 60),
-        Expanded(
-          child: _buildLinkSection('Useful Links', [
-            'Homepage',
-            'About Us',
-            'Help',
-            'Contact Us',
-          ], context),
-        ),
-        const SizedBox(width: 60),
-        Expanded(
-          child: _buildLinkSection('Help & Information', [
-            'FAQ\'S',
-            'Shipping',
-            'Tracking Id',
-          ], context),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildTabletFooter(BuildContext context) {
-    return Column(
-      children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(flex: 2, child: _buildCompanyInfo(context)),
-            const SizedBox(width: 40),
-            Expanded(
-              child: _buildLinkSection('Shopping and Categories', [
-                'Men\'s Shopping',
-                'Women\'s Shopping',
-                'Kid\'s Shopping',
-              ], context),
-            ),
-          ],
-        ),
-        const SizedBox(height: 30),
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _buildLinkSection('Useful Links', [
-                'Homepage',
-                'About Us',
-                'Help',
-                'Contact Us',
-              ], context),
-            ),
-            const SizedBox(width: 40),
-            Expanded(
-              child: _buildLinkSection('Help & Information', [
-                'FAQ\'S',
-                'Shipping',
-                'Tracking Id',
-              ], context),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMobileFooter(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildCompanyInfo(context),
-          const SizedBox(height: 30),
-          _buildLinkSection('Shopping and Categories', [
-            'Men\'s Shopping',
-            'Women\'s Shopping',
-            'Kid\'s Shopping',
-          ], context),
-          const SizedBox(height: 30),
-          _buildLinkSection('Useful Links', [
-            'Homepage',
-            'About Us',
-            'Help',
-            'Contact Us',
-          ], context),
-          const SizedBox(height: 30),
-          _buildLinkSection('Help & Information', [
-            'FAQ\'S',
-            'Shipping',
-            'Tracking Id',
-          ], context),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildCompanyInfo(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < ResponsiveConstants.tabletBreakpoint;
-
+  Widget _buildCompanyInfo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -163,26 +71,22 @@ class FooterSection extends StatelessWidget {
           logoClr: Color(0xFFFFFFFF),
           companyNameClr: Color(0xFFFFFFFF),
           companyCategryClr: Color(0xFFFFFFFF),
-          isSmall: isMobile,
         ),
-        SizedBox(height: isMobile ? 15 : 30),
-        _buildInfoRow('Address:', 'Lahore Road, Sheikhupura', context),
-        const SizedBox(height: 8),
-        _buildInfoRow('E-mail:', 'Example@gmail.com', context),
-        const SizedBox(height: 8),
-        _buildInfoRow('Phone:', '0092 356 3656210', context),
+        const SizedBox(height: 30),
+        _buildInfoRow('Address:', 'Lahore Road, Sheikhupura'),
+        const SizedBox(height: 12),
+        _buildInfoRow('E-mail:', 'Example@gmail.com'),
+        const SizedBox(height: 12),
+        _buildInfoRow('Phone:', '0092 356 3656210'),
       ],
     );
   }
 
-  Widget _buildInfoRow(String label, String value, BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < ResponsiveConstants.tabletBreakpoint;
-
+  Widget _buildInfoRow(String label, String value) {
     return RichText(
       text: TextSpan(
         style: TextStyle(
-          fontSize: isMobile ? 12 : 14,
+          fontSize: 14,
           fontFamily: 'Inter',
           color: Colors.white,
         ),
@@ -197,34 +101,27 @@ class FooterSection extends StatelessWidget {
     );
   }
 
-  Widget _buildLinkSection(
-    String title,
-    List<String> links,
-    BuildContext context,
-  ) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < ResponsiveConstants.tabletBreakpoint;
-
+  Widget _buildLinkSection(String title, List<String> links) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           title,
           style: TextStyle(
-            fontSize: isMobile ? 14 : 16,
+            fontSize: 16,
             fontWeight: FontWeight.w700,
             fontFamily: 'Inter',
             color: Color(0xFFFFFFFF),
           ),
         ),
-        const SizedBox(height: 15),
+        const SizedBox(height: 20),
         ...links.map(
           (link) => Padding(
-            padding: const EdgeInsets.only(bottom: 8),
+            padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               link,
               style: TextStyle(
-                fontSize: isMobile ? 12 : 14,
+                fontSize: 14,
                 fontFamily: 'Inter',
                 color: Color(0xFFFFFFFF),
               ),

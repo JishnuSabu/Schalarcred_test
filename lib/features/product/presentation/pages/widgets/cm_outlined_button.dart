@@ -3,35 +3,43 @@ import 'package:flutter/material.dart';
 class CustomOutlinedButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
-  final bool isSmall;
+  final double height;
+  final double borderWidth;
+  final Color borderColor;
+  final Color textColor;
+  final double fontSize;
+  final BorderRadius borderRadius;
 
   const CustomOutlinedButton({
     super.key,
     required this.text,
     required this.onPressed,
-    this.isSmall = false,
+    this.height = 50,
+    this.borderWidth = 2,
+    this.borderColor = Colors.white,
+    this.textColor = Colors.white,
+    this.fontSize = 18,
+    this.borderRadius = const BorderRadius.all(Radius.circular(0)),
   });
 
   @override
   Widget build(BuildContext context) {
-    final actualIsSmall = isSmall || MediaQuery.of(context).size.width < 768;
-
-    return OutlinedButton(
-      onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        side: BorderSide(color: Color(0xFFFFFFFF), width: 2),
-        padding: EdgeInsets.symmetric(
-          horizontal: actualIsSmall ? 16 : 32,
-          vertical: actualIsSmall ? 8 : 12,
+    return SizedBox(
+      height: height,
+      child: OutlinedButton(
+        onPressed: onPressed,
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: borderColor, width: borderWidth),
+          shape: RoundedRectangleBorder(borderRadius: borderRadius),
         ),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: Color(0xFFFFFFFF),
-          fontSize: actualIsSmall ? 12 : 14,
-          fontFamily: 'Inter',
+        child: Text(
+          text,
+          style: TextStyle(
+            color: textColor,
+            fontSize: fontSize,
+            fontWeight: FontWeight.w700,
+            fontFamily: 'Inter',
+          ),
         ),
       ),
     );

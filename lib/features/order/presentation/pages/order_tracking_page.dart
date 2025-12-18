@@ -14,12 +14,9 @@ class OrderTrackingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Get order ID from route arguments
     final orderId = ModalRoute.of(context)?.settings.arguments as String?;
 
-    // Trigger order fetch if we have an order ID
     if (orderId != null) {
-      // Use addPostFrameCallback to avoid calling during build
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.read<OrderBloc>().add(FetchOrderEvent(orderId));
       });
@@ -30,7 +27,6 @@ class OrderTrackingPage extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            // Header
             Container(
               height: 80,
               padding: const EdgeInsets.symmetric(horizontal: 70),
@@ -48,19 +44,18 @@ class OrderTrackingPage extends StatelessWidget {
                     onTap: () {
                       Navigator.pushNamed(context, '/home');
                     },
-                    child: menuItem("Home", context),
+                    child: menuItem("Home"),
                   ),
-                  menuItem("Men's", context),
-                  menuItem("Women's", context),
-                  menuItem("Kid's", context),
-                  menuItem("About Us", context),
-                  menuItem("Contact Us", context),
+                  menuItem("Men's"),
+                  menuItem("Women's"),
+                  menuItem("Kid's"),
+                  menuItem("About Us"),
+                  menuItem("Contact Us"),
                 ],
               ),
             ),
             const SizedBox(height: 40),
 
-            // Order Tracking Content
             BlocBuilder<OrderBloc, OrderState>(
               builder: (context, state) {
                 if (state is OrderLoading) {

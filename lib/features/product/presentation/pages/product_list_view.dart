@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:scholarcred_test/core/responsive/responsive.dart';
 import 'package:scholarcred_test/features/product/domain/entities/product.dart';
 import 'package:scholarcred_test/features/product/presentation/pages/widgets/product_card.dart';
 
@@ -17,87 +16,51 @@ class ProductListSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final padding = ResponsiveConstants.getHorizontalPadding(context);
-    final titleFontSize = ResponsiveConstants.getTitleFontSize(context);
-    final bodyFontSize = ResponsiveConstants.getBodyFontSize(context);
-    final cardHeight = ResponsiveConstants.getProductCardHeight(context);
-    final isMobile = width < ResponsiveConstants.tabletBreakpoint;
-
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: padding),
+      padding: const EdgeInsets.symmetric(horizontal: 70),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: isMobile ? 0 : 8),
+            padding: const EdgeInsets.only(left: 8),
             child: Column(
-              crossAxisAlignment: isMobile
-                  ? CrossAxisAlignment.center
-                  : CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   title,
-                  style: TextStyle(
-                    fontSize: titleFontSize,
+                  style: const TextStyle(
+                    fontSize: 36,
                     fontWeight: FontWeight.w700,
                     color: Color(0xFF000000),
                     fontFamily: 'Inter',
                   ),
-                  textAlign: isMobile ? TextAlign.center : TextAlign.left,
                 ),
                 const SizedBox(height: 8),
                 Text(
                   subtitle,
                   style: TextStyle(
-                    fontSize: bodyFontSize,
+                    fontSize: 14,
                     color: Color(0xFF000000),
                     fontFamily: 'Inter',
                   ),
-                  textAlign: isMobile ? TextAlign.center : TextAlign.left,
                 ),
               ],
             ),
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 10),
           SizedBox(
-            height: cardHeight,
-            child: isMobile
-                ? _buildMobileProductList(context)
-                : _buildDesktopProductList(context),
+            height: 565,
+            child: ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: products.length,
+              separatorBuilder: (context, index) => const SizedBox(width: 16),
+              itemBuilder: (context, index) {
+                return ProductCard(product: products[index]);
+              },
+            ),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildDesktopProductList(BuildContext context) {
-    return ListView.separated(
-      scrollDirection: Axis.horizontal,
-      itemCount: products.length,
-      separatorBuilder: (context, index) => const SizedBox(width: 16),
-      itemBuilder: (context, index) {
-        return ProductCard(product: products[index]);
-      },
-    );
-  }
-
-  Widget _buildMobileProductList(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final crossAxisCount = width < 600 ? 2 : 3;
-
-    return GridView.builder(
-      scrollDirection: Axis.horizontal,
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: crossAxisCount,
-        mainAxisSpacing: 10,
-        crossAxisSpacing: 10,
-        childAspectRatio: 0.7,
-      ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return ProductCard(product: products[index], isSmall: true);
-      },
     );
   }
 }

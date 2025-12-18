@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:scholarcred_test/core/responsive/responsive.dart';
 import 'package:scholarcred_test/features/product/presentation/bloc/product_bloc.dart';
 import 'package:scholarcred_test/features/product/presentation/bloc/product_state.dart';
 import 'package:scholarcred_test/features/product/presentation/pages/explore_products_section.dart';
@@ -9,6 +8,7 @@ import 'package:scholarcred_test/features/product/presentation/pages/hexa_shop_a
 import 'package:scholarcred_test/features/product/presentation/pages/product_list_view.dart';
 import 'package:scholarcred_test/features/product/presentation/pages/social_media_section.dart';
 import 'package:scholarcred_test/features/product/presentation/pages/widgets/hexa_shop_logo.dart';
+import 'package:scholarcred_test/features/product/presentation/pages/widgets/menu_item.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -16,12 +16,33 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            Container(
+              height: 80,
+              padding: const EdgeInsets.symmetric(horizontal: 70),
+              color: Color(0xFFD9D9D9),
+              child: Row(
+                children: [
+                  HexashopLogo(
+                    textClr: Color(0xFFFFFFFF),
+                    logoClr: Color(0xFF000000),
+                    companyNameClr: Color(0xFF000000),
+                    companyCategryClr: Color(0xFF000000),
+                  ),
+                  const Spacer(),
+                  menuItem("Home"),
+                  menuItem("Men’s"),
+                  menuItem("Kid’s"),
+                  menuItem("About Us"),
+                  menuItem("Contact Us"),
+                ],
+              ),
+            ),
+            const SizedBox(height: 40),
             HexaShopAdvertisementSection(),
+
             const SizedBox(height: 40),
             BlocBuilder<ProductBloc, ProductState>(
               builder: (context, state) {
@@ -69,43 +90,17 @@ class HomePage extends StatelessWidget {
                 }
               },
             ),
+
             const SizedBox(height: 40),
             const ExploreProductsSection(),
             const SizedBox(height: 40),
             SocialMediaSection(),
             const SizedBox(height: 40),
             FooterSection(),
+            // _ProductSection(title: "Women’s Latest"),
           ],
         ),
       ),
     );
-  }
-
-  PreferredSizeWidget? _buildAppBar(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-
-    if (width < ResponsiveConstants.tabletBreakpoint) {
-      // Mobile: Drawer menu
-      return AppBar(
-        backgroundColor: Color(0xFFD9D9D9),
-        title: HexashopLogo(
-          textClr: Color(0xFFFFFFFF),
-          logoClr: Color(0xFF000000),
-          companyNameClr: Color(0xFF000000),
-          companyCategryClr: Color(0xFF000000),
-        ),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              Scaffold.of(context).openEndDrawer();
-            },
-          ),
-        ],
-      );
-    } else {
-      // Tablet and Desktop: Horizontal menu
-      return null; // No AppBar for larger screens
-    }
   }
 }

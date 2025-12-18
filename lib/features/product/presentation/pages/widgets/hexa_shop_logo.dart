@@ -9,7 +9,6 @@ class HexashopLogo extends StatelessWidget {
   final Color logoClr;
   final Color companyNameClr;
   final Color companyCategryClr;
-  final bool isSmall; // For responsive sizing
 
   const HexashopLogo({
     super.key,
@@ -18,35 +17,15 @@ class HexashopLogo extends StatelessWidget {
     required this.logoClr,
     required this.companyNameClr,
     required this.companyCategryClr,
-    this.isSmall = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
-    final isMobile = width < 768;
-    final isTablet = width >= 768 && width < 1024;
-
-    // Determine actual sizing
-    final bool smallMode = isSmall || isMobile;
-    final bool tabletMode = isTablet && !isMobile;
-
-    final double logoSize = smallMode ? 40.0 : (tabletMode ? 50.0 : size);
-    final double fontSize = smallMode ? 20.0 : (tabletMode ? 24.0 : 28.0);
-    final double companyNameSize = smallMode
-        ? 14.0
-        : (tabletMode ? 16.0 : 18.0);
-    final double companyCategorySize = smallMode
-        ? 9.0
-        : (tabletMode ? 10.0 : 11.0);
-    final double spacing = smallMode ? 4.0 : (tabletMode ? 6.0 : 8.0);
-
     return Row(
-      mainAxisSize: MainAxisSize.min,
       children: [
         SizedBox(
-          width: logoSize,
-          height: logoSize,
+          width: size,
+          height: size,
           child: CustomPaint(
             painter: HexagonPainter(logoClr: logoClr),
             child: Center(
@@ -54,35 +33,28 @@ class HexashopLogo extends StatelessWidget {
                 'H',
                 style: GoogleFonts.inter(
                   color: textClr,
-                  fontSize: fontSize,
+                  fontSize: 28,
                   fontWeight: FontWeight.w700,
                 ),
               ),
             ),
           ),
         ),
-        SizedBox(width: spacing),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               'HEXASHOP',
               style: GoogleFonts.inter(
-                fontSize: companyNameSize,
+                fontSize: 18,
                 fontWeight: FontWeight.w700,
                 color: companyNameClr,
               ),
             ),
-            SizedBox(height: smallMode ? 1.0 : 2.0),
             Text(
               'ONLINE SHOPPING',
-              style: GoogleFonts.inter(
-                fontSize: companyCategorySize,
-                color: companyCategryClr,
-                letterSpacing: smallMode ? 0.5 : 1.0,
-              ),
+              style: GoogleFonts.inter(fontSize: 11, color: companyCategryClr),
             ),
           ],
         ),
@@ -91,17 +63,10 @@ class HexashopLogo extends StatelessWidget {
   }
 }
 
-// Responsive HexagonPainter (optional - can adjust stroke width if needed)
 class HexagonPainter extends CustomPainter {
   final Color logoClr;
-  final double strokeWidth;
 
-  HexagonPainter({
-    super.repaint,
-    required this.logoClr,
-    this.strokeWidth = 0.0,
-  });
-
+  HexagonPainter({super.repaint, required this.logoClr});
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
@@ -126,100 +91,8 @@ class HexagonPainter extends CustomPainter {
     path.close();
 
     canvas.drawPath(path, paint);
-
-    // Optional: Add stroke/border if needed
-    if (strokeWidth > 0) {
-      final borderPaint = Paint()
-        ..color = logoClr.withOpacity(0.8)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = strokeWidth;
-      canvas.drawPath(path, borderPaint);
-    }
   }
 
   @override
   bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
-}
-
-// Alternative: Factory method for different screen sizes
-class ResponsiveHexashopLogo {
-  static Widget small({
-    required Color textClr,
-    required Color logoClr,
-    required Color companyNameClr,
-    required Color companyCategryClr,
-  }) {
-    return HexashopLogo(
-      size: 40.0,
-      textClr: textClr,
-      logoClr: logoClr,
-      companyNameClr: companyNameClr,
-      companyCategryClr: companyCategryClr,
-      isSmall: true,
-    );
-  }
-
-  static Widget medium({
-    required Color textClr,
-    required Color logoClr,
-    required Color companyNameClr,
-    required Color companyCategryClr,
-  }) {
-    return HexashopLogo(
-      size: 50.0,
-      textClr: textClr,
-      logoClr: logoClr,
-      companyNameClr: companyNameClr,
-      companyCategryClr: companyCategryClr,
-    );
-  }
-
-  static Widget large({
-    required Color textClr,
-    required Color logoClr,
-    required Color companyNameClr,
-    required Color companyCategryClr,
-  }) {
-    return HexashopLogo(
-      size: 60.0,
-      textClr: textClr,
-      logoClr: logoClr,
-      companyNameClr: companyNameClr,
-      companyCategryClr: companyCategryClr,
-    );
-  }
-
-  // Auto-detect size based on context
-  static Widget auto({
-    required BuildContext context,
-    required Color textClr,
-    required Color logoClr,
-    required Color companyNameClr,
-    required Color companyCategryClr,
-  }) {
-    final width = MediaQuery.of(context).size.width;
-
-    if (width < 768) {
-      return small(
-        textClr: textClr,
-        logoClr: logoClr,
-        companyNameClr: companyNameClr,
-        companyCategryClr: companyCategryClr,
-      );
-    } else if (width < 1024) {
-      return medium(
-        textClr: textClr,
-        logoClr: logoClr,
-        companyNameClr: companyNameClr,
-        companyCategryClr: companyCategryClr,
-      );
-    } else {
-      return large(
-        textClr: textClr,
-        logoClr: logoClr,
-        companyNameClr: companyNameClr,
-        companyCategryClr: companyCategryClr,
-      );
-    }
-  }
 }

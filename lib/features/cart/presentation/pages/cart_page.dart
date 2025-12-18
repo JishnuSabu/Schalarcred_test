@@ -64,12 +64,12 @@ class CartPage extends StatelessWidget {
                           onTap: () {
                             Navigator.pushNamed(context, '/home');
                           },
-                          child: menuItem("Home", context),
+                          child: menuItem("Home"),
                         ),
-                        menuItem("Men’s", context),
-                        menuItem("Kid’s", context),
-                        menuItem("About Us", context),
-                        menuItem("Contact Us", context),
+                        menuItem("Men’s"),
+                        menuItem("Kid’s"),
+                        menuItem("About Us"),
+                        menuItem("Contact Us"),
                       ],
                     ),
                   ),
@@ -183,7 +183,7 @@ class CartPage extends StatelessWidget {
         SizedBox(
           width: 72,
           height: 81,
-          child: Image.network(
+          child: Image.asset(
             item.image,
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
